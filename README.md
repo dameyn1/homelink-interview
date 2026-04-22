@@ -54,7 +54,7 @@ If you don’t use .env, the project defaults to local settings.
 ## Start the Docker instance:
 there are a few scripts to help when using docker. i wrote them with powershell in mind so for a quick start you can run:
 ```bash
-npm docker-build
+npm run docker-build
 ```
 this is just a quick script that composes down docker if its running and spins up a new instance.
 
@@ -63,12 +63,6 @@ this is just a quick script that composes down docker if its running and spins u
 ## Start the API server:
 ```bash
 npm start
-```
-
-Or run in development mode with auto‑reload:
-
-```bash
-npm run dev
 ```
 
 The server will start on **http://localhost:3000**
@@ -80,6 +74,15 @@ A quick test script, creates test devices, sends MQTT telemetry, and runs the RE
 Run it with:
 ```bash
 npm run test-devices
+```
+
+# Running the Virtual Device Announcer
+
+A quick test script for finding devices on the network.
+
+Run it with:
+```bash
+npm run announce-devices
 ```
 # Assumptions
 

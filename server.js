@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const mqtt = require('mqtt');
 const deviceRoutes = require('./routes/deviceRoutes');
 const cors = require('cors');
+const NetworkDiscovery = require('./controllers/networkDiscovery');
 
 const app = express();
 app.use(express.json());
@@ -12,11 +13,20 @@ app.use(cors());
 // Config
 // ----------------------
 const MQTT_URL = process.env.MQTT_URL || 'mqtt://localhost:1883';
+const discovery = new NetworkDiscovery(process.env.MQTT_URL);
 const MQTT_DEVICE_TOPIC = 'devices/+/status';
 const HTTP_PORT = process.env.PORT || 3000;
 const MONGO_URL =
   process.env.MONGO_URL ||
   'mongodb://root:example@localhost:27017/iot_manager?authSource=admin';
+
+// Start listening for device announcements
+discovery.start();
+
+// Optional: react to discovered devices
+discovery.on('deviceDiscovered', (device) => {
+  console.log('New or updated device:', device.deviceId);
+});
 
 mongoose.connect(MONGO_URL);
 
